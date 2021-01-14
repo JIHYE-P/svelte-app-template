@@ -37,7 +37,24 @@
     box-sizing: border-box;
     user-select: none;
   }
-
+  ul, li {
+    list-style: none;
+  }
+  button {
+    border: none;
+    background: none;
+    outline: none;
+    cursor: pointer;
+    &::focus {
+      background: none;
+    }
+  }
+  input {
+    outline: none;
+    &::placeholder {
+      color: #fff; 
+    }
+  }
   body {
     width: 100vw;
     height: 100vh;
@@ -83,12 +100,7 @@
     font-weight: 500;
     font-size: 17px;
     border-radius: 6px;
-    outline: none;
-    &::placeholder {
-      color: #fff; 
-    }
   }
-
   .form__button {
     width: 55px;
     margin-left: 15px;
@@ -96,11 +108,31 @@
     color: #fff;
     font-size: 17px;
     border-radius: 6px;
-    outline: none;
-    cursor: pointer;
-    &::focus {
-      background: none;
+  }
+  .todos__list {
+    width: 100%;
+  }
+  .todos__list-item {
+    margin: 20px 0;
+  }
+  .todos__list-inner {
+    position: relative;
+    & .item-text {
+      padding: 12px 50px 12px 40px;
+      color: #fff;
+      font-size: 17px;
+      border-radius: 6px;
+    }
+    & .item-check {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 45px;
+      height: 45px;
+      color: #555;
+      &:hover {
+        color: #fff
+      }
     }
   }
-
 </style>
