@@ -6,7 +6,6 @@
   export let onClick;
   //$: 바벨문법 - 내부에서 참조된 값의 변화에 반응적인 데이터
   $: todosItem = todos;
-
 </script>
 
 <section class="todos">
