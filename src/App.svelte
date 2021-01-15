@@ -9,9 +9,9 @@
   let todos = getTodos ? getTodos : [];
   let last = todos[todos.length - 1];
   let id = !last ? 0 : last.id + 1;
-
-  const onSave = () => {
-    const input = document.getElementsByName('todo')[0];
+  
+  const handleSaveInput = () => {
+    const input = document.getElementById('todo');
     if(!input.value) return;
     const newTodo = {
       id: id++,
@@ -21,60 +21,75 @@
     todos = [...todos, newTodo];
     setLocalStorage(todos);
     input.value = '';
-  };
+  }
 
+  const handleSaveTodo = (target, data) => (ev) => {
+    const input = document.getElementById(target);
+    const [changeItem] = todos.filter(item => item.id === data.id);
+    changeItem.todo = input.value;
+
+    setLocalStorage(todos);
+  }
+
+  const handleKeyupEnter = (target) => (ev) => {
+    if(ev.keyCode === 13){
+      ev.preventDefault();
+      document.getElementById(target).click();
+    }
+  }
+
+  const handleTodoDelete = (id) => (ev) => {
+    todos = todos.filter(todo => todo.id !== id);
+    setLocalStorage(todos);
+  }
+  const handleTodoCheck = (id) => (ev) => {
+    const index = todos.findIndex(todo => todo.id === id);
+    todos[index].checked = !todos[index].checked;
+    
+    setLocalStorage(todos);
+  }
 </script>
 
 <main>
-  <TodoForm onSave={onSave} />
-  <TodoList todos={todos} />
+  <TodoForm 
+    onSave={handleSaveInput} 
+    onKeyup={handleKeyupEnter('save')} 
+  />
+  <TodoList 
+    todos={todos} 
+    onClick={handleSaveTodo} 
+    onKeyup={handleKeyupEnter} 
+    onDelete={handleTodoDelete}
+    onCheck={handleTodoCheck}
+  />
 </main>
 
 <style global lang="scss">
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    user-select: none;
-  }
-  ul, li {
-    list-style: none;
-  }
-  button {
-    border: none;
-    background: none;
-    outline: none;
-    cursor: pointer;
-    &::focus {
-      background: none;
-    }
-  }
-  input {
-    outline: none;
-    &::placeholder {
-      color: #fff; 
-    }
-  }
   body {
     width: 100vw;
     height: 100vh;
     background: #1488cc;
     background: linear-gradient(to left, #283593, #1976d2);
-    /* background: url('https://source.unsplash.com/n7a2OJDSZns/2200x1100') no-repeat center / cover; */
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: 'NanumSquareR';
   }
   main {
     position: relative;
     width: 420px;
-    padding: 30px;
+    padding: 20px;
     border-radius: 15px;
     background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(30px);
     border: 2px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 0 80px rgba(0, 0, 0, 0.2);
     overflow: hidden;
+  }
+  svg {
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
   }
   .style-glass {
     border: none;
@@ -83,7 +98,6 @@
     background: transparent;
     backdrop-filter: blur(5px);
     box-shadow: 4px 4px 60px rgba(0, 0, 0, 0.2);
-    /* text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); */
   }
   .form {
     width: 100%;
@@ -96,15 +110,13 @@
     margin-right: auto;
     padding: 16px 20px;
     color: #fff;
-    font-family: Montserrat, sans-serif;
-    font-weight: 500;
     font-size: 17px;
     border-radius: 6px;
   }
   .form__button {
-    width: 55px;
+    width: 52px;
+    height: 52px;
     margin-left: 15px;
-    padding: 16px 20px;
     color: #fff;
     font-size: 17px;
     border-radius: 6px;
@@ -112,27 +124,53 @@
   .todos__list {
     width: 100%;
   }
+  .todos__list-none {
+    padding: 30px;
+    text-align: center;
+    color: #fff;
+    font-size: 20px;
+  }
   .todos__list-item {
     margin: 20px 0;
   }
   .todos__list-inner {
     position: relative;
     & .item-text {
-      padding: 12px 50px 12px 40px;
+      width: 100%;
+      padding: 13px 50px;
       color: #fff;
       font-size: 17px;
       border-radius: 6px;
+      cursor: pointer;
     }
-    & .item-check {
+    & .item-check, 
+    & .item-delete {
       position: absolute;
-      left: 0;
       top: 0;
+      left: 0;
       width: 45px;
       height: 45px;
-      color: #555;
+      color: rgba(255, 255, 255, 0.5);
       &:hover {
         color: #fff
       }
+    }
+    & .item-delete {
+      left: auto;
+      right: 0;
+    }
+  }
+  .todos__list-inner.checked {
+    & .item-text {
+      color: #ddd;
+      background: rgba(255, 255, 255, 0.3);
+      cursor: default;
+    }
+    & .item-check {
+      color: green;
+    }
+    & .item-delete {
+      color: #ddd;
     }
   }
 </style>

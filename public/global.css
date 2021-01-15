@@ -1,0 +1,38 @@
+@font-face {
+  font-family: "NanumSquareR";
+  src: url("https://hashsnap-static.s3.ap-northeast-2.amazonaws.com/file/fonts/NanumSquareR.ttf");
+}
+@font-face {
+  font-family: "NanumSquareB";
+  src: url("https://hashsnap-static.s3.ap-northeast-2.amazonaws.com/file/fonts/NanumSquareB.ttf");
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+}
+ul, li {
+  list-style: none;
+}
+button {
+  border: none;
+  background: none;
+  outline: none;
+  cursor: pointer;
+  font-family: 'NanumSquareR';
+}
+button::focus {
+  background: none;
+  outline: none;
+}
+input {
+  background: none;
+  border: none;
+  outline: none;
+  font-family: 'NanumSquareR';
+}
+input::placeholder {
+  color: #fff; 
+}
