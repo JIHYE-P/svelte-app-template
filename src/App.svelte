@@ -27,7 +27,6 @@
     const input = document.getElementById(target);
     const [changeItem] = todos.filter(item => item.id === data.id);
     changeItem.todo = input.value;
-
     setLocalStorage(todos);
   }
 
@@ -45,7 +44,6 @@
   const handleTodoCheck = (id) => (ev) => {
     const index = todos.findIndex(todo => todo.id === id);
     todos[index].checked = !todos[index].checked;
-    
     setLocalStorage(todos);
   }
 </script>
@@ -131,10 +129,21 @@
     font-size: 20px;
   }
   .todos__list-item {
-    margin: 20px 0;
+    margin-top: 20px;
   }
   .todos__list-inner {
     position: relative;
+    border-radius: 6px;
+    &::after {
+      content: '';
+      display: block;
+      width: 0;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      border-radius: 6px;
+    }
     & .item-text {
       width: 100%;
       padding: 13px 50px;
@@ -151,6 +160,7 @@
       width: 45px;
       height: 45px;
       color: rgba(255, 255, 255, 0.5);
+      z-index: 5;
       &:hover {
         color: #fff
       }
@@ -161,9 +171,14 @@
     }
   }
   .todos__list-inner.checked {
+    &::after {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.3);
+      background: linear-gradient(60deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.1) 100%);
+      animation: complete 0.8s ease-in-out;
+    }
     & .item-text {
       color: #ddd;
-      background: rgba(255, 255, 255, 0.3);
       cursor: default;
     }
     & .item-check {
@@ -171,6 +186,15 @@
     }
     & .item-delete {
       color: #ddd;
+    }
+  }
+
+  @keyframes complete {
+    0% {
+      width: 0;
+    }
+    100% {
+      width: 100%;
     }
   }
 </style>
