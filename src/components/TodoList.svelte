@@ -25,7 +25,7 @@
               id={`todoed-${i}`}
               class="item-text style-glass"
               bind:value={item.todo}
-              on:keyup={onKeyup(`todoItem-${i}`)}
+              on:keyup|preventDefault={onKeyup(`todoItem-${i}`)}
               disabled={item.checked}
             />
             <button class="item-delete" on:click={onDelete(item.id)}>

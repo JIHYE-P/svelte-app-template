@@ -103,3 +103,13 @@ Then, from within your project folder:
 npm run build
 surge public my-project.surge.sh
 ```
+
+## Run Time
+
+### onMount
+`onMount(callback: () => void)`     
+`onMount(callback: () => () => void)`     
+
+구성 요소가 DOM에 마운트되는 즉시 실행되도록 콜백을 예약합니다. 구성 요소를 초기화하는 동안 호출해야합니다 (단 , 구성 요소 내부에 있을 필요는 없으며 외부 모듈에서 호출 할 수 있음).
+
+

@@ -31,10 +31,7 @@
   }
 
   const handleKeyupEnter = (target) => (ev) => {
-    if(ev.keyCode === 13){
-      ev.preventDefault();
-      document.getElementById(target).click();
-    }
+    (ev.keyCode === 13) && document.getElementById(target).click();
   }
 
   const handleTodoDelete = (id) => (ev) => {
